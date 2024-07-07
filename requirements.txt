@@ -1,5 +1,5 @@
 streamlit
-numpy
+numpy==1.26.4
 #tensorflow
 #protobuf==3.20.0
 protobuf==3.20.3
