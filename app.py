@@ -38,7 +38,14 @@ def get_prediction(image):
 # Streamlit app
 st.set_page_config(page_title="Brain Tumor Detection", page_icon="🧠", layout="centered")
 st.title("🧠 Brain Tumor Detection")
+
+# Display banner image below the title
+st.image("banner.png", use_column_width=True)
+
 st.write("Upload an MRI image to predict the type of brain tumor.")
+
+# Display logo in the sidebar
+st.sidebar.image("MICROAI1.JPG", use_column_width=True)
 
 # Upload file
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -48,14 +55,19 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)
 
     # Display the uploaded image
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
+    # st.image(image, caption='Uploaded Image.', use_column_width=True)
 
-    st.markdown("### Prediction")
-    with st.spinner('Analyzing the image...'):
-        # Make prediction
-        predicted_class = get_prediction(image)
+    if st.button("Predict"):
+        st.markdown("### Prediction")
+        with st.spinner('Analyzing the image...'):
+            # Make prediction
+            predicted_class = get_prediction(image)
 
-        # Display the prediction with some styling
-        st.success(f"**Predicted Class Name:** {class_names[predicted_class]}")
+            # Display the image on the left and prediction on the right
+            col1, col2 = st.columns(2)
+            with col1:
+                st.image(image, caption='Uploaded Image.', use_column_width=True)
+            with col2:
+                st.success(f"**Predicted Class Name:** {class_names[predicted_class]}")
 else:
     st.info("Please upload a JPG, JPEG or PNG image to get a prediction.")
